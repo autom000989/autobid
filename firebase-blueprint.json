@@ -1,0 +1,280 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Registered platform user profile",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string" },
+        "username": { "type": "string" },
+        "fullName": { "type": "string" },
+        "avatarUrl": { "type": "string" },
+        "isVerified": { "type": "boolean" },
+        "verificationStatus": { "type": "string", "enum": ["unverified", "pending", "verified", "rejected"] },
+        "followers": { "type": "number" },
+        "following": { "type": "number" },
+        "bio": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "admin", "employee", "finance", "support", "accountant"] },
+        "deposits": { "type": "number" },
+        "createdAt": { "type": "number" },
+        "isDeleted": { "type": "boolean" },
+        "suspensionStatus": { "type": "string", "enum": ["none", "temporary", "permanent"] },
+        "totalCommissionPaid": { "type": "number" }
+      },
+      "required": ["id", "username", "role"]
+    },
+    "Username": {
+      "title": "Username",
+      "description": "Unique username registry index mapping to uid",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" }
+      },
+      "required": ["uid"]
+    },
+    "Vehicle": {
+      "title": "Vehicle",
+      "description": "Vehicle auction listing",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "make": { "type": "string" },
+        "model": { "type": "string" },
+        "year": { "type": "number" },
+        "currentBid": { "type": "number" },
+        "minBidIncrement": { "type": "number" },
+        "originalMSRP": { "type": "number" },
+        "reservePrice": { "type": "number" },
+        "status": { "type": "string" },
+        "condition": { "type": "string" },
+        "mileage": { "type": "number" },
+        "fuelType": { "type": "string" },
+        "transmission": { "type": "string" },
+        "engine": { "type": "string" },
+        "bodyStyle": { "type": "string" },
+        "exteriorColor": { "type": "string" },
+        "interiorColor": { "type": "string" },
+        "vin": { "type": "string" },
+        "location": { "type": "string" },
+        "timeRemaining": { "type": "string" },
+        "seller": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "endsAt": { "type": "number" },
+        "createdAt": { "type": "number" },
+        "views": { "type": "number" },
+        "interestedCount": { "type": "number" },
+        "watchCount": { "type": "number" },
+        "imageSeed": { "type": "number" },
+        "hasRegistrationCard": { "type": "boolean" },
+        "rcCardUrl": { "type": "string" },
+        "rcCardNumber": { "type": "string" }
+      },
+      "required": ["id", "make", "model", "year", "currentBid", "status"]
+    },
+    "Bid": {
+      "title": "Bid",
+      "description": "Placed bid on an auction vehicle",
+      "type": "object",
+      "properties": {
+        "vehicleId": { "type": "string" },
+        "bidderId": { "type": "string" },
+        "bidderUsername": { "type": "string" },
+        "amount": { "type": "number" },
+        "timestamp": { "type": "number" }
+      },
+      "required": ["vehicleId", "bidderId", "amount", "timestamp"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "User wallet transaction record",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "type": { "type": "string" },
+        "amount": { "type": "number" },
+        "status": { "type": "string" },
+        "timestamp": { "type": "number" },
+        "title": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "required": ["userId", "type", "amount", "timestamp"]
+    },
+    "Withdrawal": {
+      "title": "Withdrawal",
+      "description": "Payout and withdrawal request",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "username": { "type": "string" },
+        "amount": { "type": "number" },
+        "status": { "type": "string" },
+        "requestedAt": { "type": "number" },
+        "processedAt": { "type": "number" }
+      },
+      "required": ["userId", "amount", "status", "requestedAt"]
+    },
+    "Setting": {
+      "title": "Setting",
+      "description": "Company wallet and system financial metrics",
+      "type": "object",
+      "properties": {
+        "balance": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["balance"]
+    },
+    "Ticket": {
+      "title": "Ticket",
+      "description": "Customer support ticket",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "username": { "type": "string" },
+        "subject": { "type": "string" },
+        "category": { "type": "string" },
+        "priority": { "type": "string" },
+        "status": { "type": "string" },
+        "description": { "type": "string" },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["userId", "subject", "status", "createdAt"]
+    },
+    "SupportChat": {
+      "title": "SupportChat",
+      "description": "Live support chat thread",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "username": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" },
+        "unreadCountUser": { "type": "number" },
+        "unreadCountAdmin": { "type": "number" },
+        "lastMessage": { "type": "string" }
+      },
+      "required": ["userId", "status", "createdAt"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "Message in support chat thread",
+      "type": "object",
+      "properties": {
+        "text": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "senderRole": { "type": "string" },
+        "timestamp": { "type": "number" }
+      },
+      "required": ["text", "senderId", "timestamp"]
+    },
+    "Appeal": {
+      "title": "Appeal",
+      "description": "User account suspension recovery appeal",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "reason": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "number" },
+        "reviewedAt": { "type": "number" }
+      },
+      "required": ["userId", "reason", "status", "createdAt"]
+    },
+    "Verification": {
+      "title": "Verification",
+      "description": "ID and PAN identity authentication application",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "username": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "fullName": { "type": "string" },
+        "idType": { "type": "string" },
+        "idNumber": { "type": "string" },
+        "dob": { "type": "string" },
+        "address": { "type": "string" },
+        "frontDocUrl": { "type": "string" },
+        "backDocUrl": { "type": "string" },
+        "status": { "type": "string" },
+        "submittedAt": { "type": "number" },
+        "reviewedAt": { "type": "number" },
+        "reviewerNotes": { "type": "string" },
+        "aiConfidenceScore": { "type": "number" },
+        "rejectionReason": { "type": "string" }
+      },
+      "required": ["userId", "fullName", "idType", "idNumber", "status", "submittedAt"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "User in-app notifications and alerts",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string" },
+        "read": { "type": "boolean" },
+        "timestamp": { "type": "number" },
+        "link": { "type": "string" }
+      },
+      "required": ["userId", "title", "message", "read", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles and account settings"
+    },
+    "/usernames/{username}": {
+      "schema": "Username",
+      "description": "Unique username claim index"
+    },
+    "/vehicles/{vehicleId}": {
+      "schema": "Vehicle",
+      "description": "Car and vehicle auction records"
+    },
+    "/bids/{bidId}": {
+      "schema": "Bid",
+      "description": "Auction bid records"
+    },
+    "/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Wallet and billing transactions"
+    },
+    "/withdrawals/{withdrawalId}": {
+      "schema": "Withdrawal",
+      "description": "Withdrawal requests for seller payouts"
+    },
+    "/settings/{docId}": {
+      "schema": "Setting",
+      "description": "Global settings and system wallets"
+    },
+    "/tickets/{ticketId}": {
+      "schema": "Ticket",
+      "description": "User support tickets"
+    },
+    "/support_chats/{chatId}": {
+      "schema": "SupportChat",
+      "description": "Support conversation threads"
+    },
+    "/support_chats/{chatId}/messages/{messageId}": {
+      "schema": "ChatMessage",
+      "description": "Messages within a support chat"
+    },
+    "/appeals/{appealId}": {
+      "schema": "Appeal",
+      "description": "Account suspension appeals"
+    },
+    "/verifications/{verificationId}": {
+      "schema": "Verification",
+      "description": "Identity verification document submissions"
+    },
+    "/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "User notifications"
+    }
+  }
+}

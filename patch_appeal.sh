@@ -1,0 +1,2 @@
+sed -i 's/const handleUpdateAppeal = async (appealId: string, status: string) => {/const handleUpdateAppeal = async (appealId: string, status: string, isVerify?: boolean, userId?: string) => {/g' components/AdminPanel.tsx
+sed -i '/await updateDoc(doc(db, '"'"'appeals'"'"', appealId), { status });/a \      if (isVerify && userId) await updateDoc(doc(db, '"'"'users'"'"', userId), { isVerified: true });' components/AdminPanel.tsx

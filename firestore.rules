@@ -1,0 +1,145 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAuthenticated() { return request.auth != null; }
+    
+    function getUserData() {
+      return exists(/databases/$(database)/documents/users/$(request.auth.uid)) ? get(/databases/$(database)/documents/users/$(request.auth.uid)).data : {};
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.email == 'tingurang931@gmail.com' || 
+        request.auth.token.email == 'mmwajnnd@gmail.com' ||
+        getUserData().get('role', 'user') == 'admin'
+      );
+    }
+    
+    function isFinance() {
+      return isAuthenticated() && (isAdmin() || getUserData().get('role', 'user') == 'finance');
+    }
+    
+    function isSupport() {
+      return isAuthenticated() && (isAdmin() || getUserData().get('role', 'user') == 'support');
+    }
+    
+    function isAccountant() {
+      return isAuthenticated() && (isAdmin() || getUserData().get('role', 'user') == 'accountant');
+    }
+    
+    function isEmployee() {
+      return isAuthenticated() && (isAdmin() || getUserData().get('role', 'user') == 'employee');
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isStaff() {
+      return isAdmin() || isFinance() || isSupport() || isAccountant() || isEmployee();
+    }
+
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    match /usernames/{username} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    match /vehicles/{vehicleId} {
+      allow read, write: if true;
+    }
+
+    match /bids/{bidId} {
+      allow read, write: if true;
+    }
+
+    match /transactions/{transactionId} {
+      allow read, write: if true;
+    }
+
+    match /withdrawals/{withdrawalId} {
+      allow read: if isAuthenticated() && (isStaff() || resource.data.userId == request.auth.uid);
+      allow create: if isAuthenticated();
+      allow update, delete: if isStaff() || isAdmin();
+    }
+
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if isStaff() || isAdmin();
+    }
+
+    match /content_banners/{bannerId} {
+      allow read: if true;
+      allow write: if isStaff() || isAdmin();
+    }
+
+    match /coupons/{couponId} {
+      allow read: if true;
+      allow write: if isStaff() || isAdmin();
+    }
+
+    match /audit_logs/{logId} {
+      allow read: if isStaff() || isAdmin();
+      allow create: if isAuthenticated();
+      allow update, delete: if isAdmin();
+    }
+
+    match /dealers/{dealerId} {
+      allow read: if true;
+      allow write: if isStaff() || isAdmin();
+    }
+
+    match /moderation_reports/{reportId} {
+      allow read: if isStaff() || isAdmin();
+      allow create: if isAuthenticated();
+      allow update, delete: if isStaff() || isAdmin();
+    }
+
+    match /sessions/{sessionId} {
+      allow read: if isAuthenticated();
+      allow write: if isStaff() || isAdmin();
+    }
+
+    match /tickets/{ticketId} {
+      allow read: if isAuthenticated() && (isStaff() || resource.data.userId == request.auth.uid);
+      allow create: if isAuthenticated();
+      allow update, delete: if isStaff() || isAdmin();
+    }
+
+    match /support_chats/{chatId} {
+      allow read: if isAuthenticated() && (isStaff() || resource.data.userId == request.auth.uid);
+      allow create: if isAuthenticated();
+      allow update, delete: if isStaff() || isAdmin();
+    }
+
+    match /support_chats/{chatId}/messages/{messageId} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated();
+    }
+
+    match /appeals/{appealId} {
+      allow read: if isAuthenticated() && (isStaff() || resource.data.userId == request.auth.uid);
+      allow create: if isAuthenticated();
+      allow update, delete: if isStaff() || isAdmin();
+    }
+
+    match /verifications/{verificationId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if isAuthenticated() ? (isStaff() || isAdmin()) : true;
+    }
+
+    match /notifications/{notificationId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if true;
+    }
+
+    match /{document=**} {
+      allow read, write: if isAdmin();
+    }
+  }
+}

@@ -1,0 +1,3 @@
+  const [notifications, setNotifications] = useState<any[]>([]);
+
+  // Listen to Auth State

@@ -1,0 +1,6 @@
+        const notifQ = query(collection(db, 'notifications'), where('userId', '==', user.uid), where('read', '==', false));
+        onSnapshot(notifQ, (snap) => {
+           const notifs: any[] = [];
+           snap.forEach(d => notifs.push({ id: d.id, ...d.data() }));
+           setNotifications(notifs);
+        });

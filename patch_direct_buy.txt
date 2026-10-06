@@ -1,0 +1,33 @@
+                        </div>
+                    </div>
+                    
+                    <div className="bg-white p-6 rounded-xl border border-gray-200">
+                        <label className="block text-sm font-bold text-gray-700 mb-2">Can a user buy the vehicle directly without bidding?</label>
+                        <div className="flex gap-4">
+                            <label className="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="allowDirectBuy" value="yes" checked={formData.allowDirectBuy === 'yes'} onChange={handleInputChange} className="w-5 h-5 text-red-600 focus:ring-red-500" />
+                                <span className="font-medium">Yes</span>
+                            </label>
+                            <label className="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="allowDirectBuy" value="no" checked={formData.allowDirectBuy === 'no'} onChange={handleInputChange} className="w-5 h-5 text-red-600 focus:ring-red-500" />
+                                <span className="font-medium">No</span>
+                            </label>
+                        </div>
+                        
+                        {formData.allowDirectBuy === 'yes' && (
+                            <div className="mt-4 animate-fade-in-up">
+                                <label className="block text-sm font-bold text-gray-700 mb-2">What would be the price the buyer offers to end the bidding? (₹ INR)</label>
+                                <div className="relative">
+                                    <span className="absolute left-5 top-3.5 text-gray-500 font-bold">₹</span>
+                                    <input 
+                                        type="number" 
+                                        name="directBuyPrice"
+                                        value={formData.directBuyPrice}
+                                        onChange={handleInputChange}
+                                        required
+                                        className={getFieldClass('directBuyPrice', 'w-full pl-10 pr-5 py-3 rounded-xl outline-none transition-all text-lg font-bold')}
+                                        placeholder="20,00,000"
+                                    />
+                                </div>
+                            </div>
+                        )}

@@ -1,0 +1,32 @@
+--- types.ts
++++ types.ts
+@@ -62,4 +62,15 @@
+   userId: string;
+   reason: string;
++  type?: 'suspension' | 'verification';
++  phone?: string;
++  email?: string;
++  documents?: string;
+   status: 'pending' | 'reviewed' | 'resolved';
+   createdAt: number;
+ }
++
++export interface SupportChat {
++  id: string;
++  userId: string;
++  username: string;
++  status: 'open' | 'active' | 'closed';
++  createdAt: number;
++  updatedAt: number;
++  unreadCountAdmin?: number;
++  unreadCountUser?: number;
++}
++
++export interface ChatMessage {
++  id: string;
++  chatId: string;
++  senderId: string;
++  senderRole: string;
++  text: string;
++  timestamp: number;
++}

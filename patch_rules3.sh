@@ -1,0 +1,1 @@
+sed -i 's/return get(\/databases\/\$(database)\/documents\/users\/\$(request.auth.uid)).data;/return exists(\/databases\/\$(database)\/documents\/users\/\$(request.auth.uid)) ? get(\/databases\/\$(database)\/documents\/users\/\$(request.auth.uid)).data : { "role": "user" };/g' firestore.rules

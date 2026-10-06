@@ -1,0 +1,59 @@
+      ) : activeTab === 'pending' ? (
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden p-6">
+          <div className="flex justify-between items-center mb-6">
+            <div>
+              <h2 className="text-xl font-bold text-gray-900">Pending Vehicle Listings</h2>
+              <p className="text-xs text-gray-500 mt-0.5">Review and approve listings submitted via the Auto Schedule recommended plan.</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {pendingVehicles.map(vehicle => (
+              <div key={vehicle.id} className="border border-gray-200 rounded-xl p-4 flex flex-col gap-3">
+                 <img src={vehicle.images?.[vehicle.coverImageIndex || 0] || 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d'} alt={vehicle.model} className="w-full h-40 object-cover rounded-lg" />
+                 <div>
+                   <h3 className="font-bold text-lg">{vehicle.year} {vehicle.make} {vehicle.model}</h3>
+                   <p className="text-sm text-gray-500">Asking: ₹{vehicle.buyNowPrice ? Math.round(vehicle.buyNowPrice / 1.5).toLocaleString() : 0}</p>
+                   <p className="text-xs text-gray-400 mt-1">Owner: {vehicle.ownerUsername || vehicle.ownerId}</p>
+                 </div>
+                 <div className="flex gap-2 mt-auto">
+                   <button 
+                     onClick={async () => {
+                       await updateDoc(doc(db, 'vehicles', vehicle.id), { status: VehicleStatus.UPCOMING });
+                       // Create notification for seller
+                       const notifRef = collection(db, 'notifications');
+                       await addDoc(notifRef, {
+                         userId: vehicle.ownerId,
+                         type: 'listing_approved',
+                         message: `Your listing for ${vehicle.year} ${vehicle.make} ${vehicle.model} has been approved and scheduled!`,
+                         read: false,
+                         createdAt: Date.now(),
+                         vehicleId: vehicle.id
+                       });
+                       alert("Listing approved successfully!");
+                     }}
+                     className="flex-1 bg-green-600 text-white font-bold py-2 rounded-lg hover:bg-green-700"
+                   >
+                     Approve & List
+                   </button>
+                   <button 
+                     onClick={async () => {
+                       const reason = prompt("Reason for rejection:");
+                       if (!reason) return;
+                       await updateDoc(doc(db, 'vehicles', vehicle.id), { status: 'Rejected', rejectionReason: reason });
+                       alert("Listing rejected.");
+                     }}
+                     className="flex-1 bg-red-100 text-red-600 font-bold py-2 rounded-lg hover:bg-red-200"
+                   >
+                     Reject
+                   </button>
+                 </div>
+              </div>
+            ))}
+            {pendingVehicles.length === 0 && (
+              <div className="col-span-full text-center py-12 text-gray-500">
+                No pending listings to review.
+              </div>
+            )}
+          </div>
+        </div>
+      ) : activeTab === 'ledger' ? (

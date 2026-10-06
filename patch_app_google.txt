@@ -1,0 +1,22 @@
+               const newUser: User = {
+                 ...CURRENT_USER,
+                 id: user.uid,
+                 email: user.email || undefined,
+                 username: user.displayName || user.email?.split('@')[0] || `user_${Math.floor(Math.random() * 10000)}`,
+                 fullName: user.displayName || user.email?.split('@')[0] || 'User',
+                 avatarUrl: user.photoURL || `https://i.pravatar.cc/150?u=${user.uid}`,
+                 isVerified: isSpecialAdmin,
+                 followers: 0,
+                 following: 0,
+                 bio: 'New member at AutoBid.',
+                 role: isSpecialAdmin ? 'admin' : 'user',
+                 deposits: 0,
+                 createdAt: Date.now(),
+                 isDeleted: false,
+                 suspensionStatus: 'none',
+                 totalCommissionPaid: 0
+               };
+               setDoc(userDocRef, newUser);
+               // Also reserve the username
+               const lowerUsername = newUser.username.trim().toLowerCase();
+               setDoc(doc(db, 'usernames', lowerUsername), { uid: user.uid });

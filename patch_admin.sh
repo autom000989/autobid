@@ -1,0 +1,1 @@
+sed -i 's/const \[selectedUser, setSelectedUser\] = useState<User | null>(null);/const [selectedUser, setSelectedUser] = useState<User | null>(null);\n  const [userSearchQuery, setUserSearchQuery] = useState("");/g' components/AdminPanel.tsx

@@ -1,0 +1,1 @@
+sed -i 's/const \[userSearchQuery, setUserSearchQuery\] = useState("");/const [userSearchQuery, setUserSearchQuery] = useState("");\n\n  const filteredUsers = users.filter(u => {\n    const query = userSearchQuery.toLowerCase();\n    return (u.username || "").toLowerCase().includes(query) || (u.id || "").toLowerCase().includes(query);\n  });/g' components/AdminPanel.tsx

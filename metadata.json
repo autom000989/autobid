@@ -1,0 +1,6 @@
+{
+  "name": "AutoBid AI Auctions",
+  "description": "A premier digital salvage and used car auction platform featuring real-time bidding, vehicle listings, and AI-powered damage analysis.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

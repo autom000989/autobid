@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AutoBid AI Auctions</title>
+    <meta name="description" content="A premier digital salvage and used car auction platform featuring real-time bidding, vehicle listings, and AI-powered damage analysis." />
+    <meta property="og:title" content="AutoBid AI Auctions" />
+    <meta property="og:description" content="A premier digital salvage and used car auction platform featuring real-time bidding, vehicle listings, and AI-powered damage analysis." />
+    <script type="importmap">
+    {
+      "imports": {
+        "@google/genai": "https://esm.sh/@google/genai@^1.41.0",
+        "react/": "https://esm.sh/react@^19.2.4/",
+        "react": "https://esm.sh/react@^19.2.4",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
+      }
+    }
+    </script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Telugu:wght@300;400;500;600;700&family=Noto+Sans+Malayalam:wght@300;400;500;600;700&family=Noto+Sans+Tamil:wght@300;400;500;600;700&family=Noto+Sans+Gujarati:wght@300;400;500;600;700&family=Noto+Sans+Gurmukhi:wght@300;400;500;600;700&family=Noto+Sans+Oriya:wght@300;400;500;600;700&family=Noto+Sans+Kannada:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      /* Dynamic Font Classes */
+      .font-outfit { font-family: 'Outfit', sans-serif; }
+      .font-hindi, .font-marathi, .font-sanskrit { font-family: 'Noto Sans Devanagari', sans-serif; }
+      .font-jp { font-family: 'Noto Sans JP', sans-serif; }
+      .font-arabic { font-family: 'Noto Sans Arabic', sans-serif; }
+      .font-urdu { font-family: 'Noto Nastaliq Urdu', serif; line-height: 1.8; }
+      .font-telugu { font-family: 'Noto Sans Telugu', sans-serif; }
+      .font-malayalam { font-family: 'Noto Sans Malayalam', sans-serif; }
+      .font-tamil { font-family: 'Noto Sans Tamil', sans-serif; }
+      .font-gujarati { font-family: 'Noto Sans Gujarati', sans-serif; }
+      .font-punjabi { font-family: 'Noto Sans Gurmukhi', sans-serif; }
+      .font-odia { font-family: 'Noto Sans Oriya', sans-serif; }
+      .font-kannada { font-family: 'Noto Sans Kannada', sans-serif; }
+
+      html {
+        font-size: 14px;
+      }
+
+      body {
+        font-family: 'Outfit', sans-serif;
+        background-color: #f8fafc;
+        -webkit-font-smoothing: antialiased;
+        letter-spacing: -0.01em;
+      }
+      
+      /* Utilities */
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(226, 232, 240, 0.8);
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(226, 232, 240, 0.9);
+      }
+      
+      .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+      }
+      .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+      }
+      
+      /* Animations */
+      @keyframes fade-in-up {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in-up {
+        animation: fade-in-up 0.5s ease-out forwards;
+      }
+      
+      @keyframes fade-in-right {
+        from { opacity: 0; transform: translateX(20px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+      .animate-fade-in-right {
+        animation: fade-in-right 0.4s ease-out forwards;
+      }
+
+       @keyframes fade-in-down {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in-down {
+        animation: fade-in-down 0.4s ease-out forwards;
+      }
+
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+        20%, 40%, 60%, 80% { transform: translateX(4px); }
+      }
+      .animate-shake {
+        animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+      }
+    </style>
+  <link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

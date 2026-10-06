@@ -1,0 +1,1 @@
+sed -i '/const confirm = window.confirm(`Are you sure you want to ${type}ly suspend ${user.username}'\''s account?`);/a \    if (!confirm) return;\n    const doubleConfirm = window.confirm(`DOUBLE CONFIRMATION: You are about to ${type}ly suspend ${user.username}. Are you absolutely sure?`);\n    if (!doubleConfirm) return;' components/AdminPanel.tsx

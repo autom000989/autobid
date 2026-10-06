@@ -1,0 +1,34 @@
+                         <div 
+                            key={vehicle.id} 
+                            onClick={() => handleVehicleClick(vehicle)}
+                            className="relative aspect-square group cursor-pointer overflow-hidden bg-gray-200"
+                        >
+                            <img 
+                                src={vehicle.images?.[vehicle.coverImageIndex || 0] || `https://picsum.photos/id/${vehicle.imageSeed}/500/500`} 
+                                alt={vehicle.model}
+                                className="w-full h-full object-cover"
+                            />
+                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 text-white font-bold text-sm">
+                                <div className="flex items-center gap-4">
+                                     <div className="flex items-center gap-1">
+                                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /><path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" /></svg>
+                                        <span>{vehicle.views || 0}</span>
+                                     </div>
+                                     <div className="flex items-center gap-1">
+                                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" /></svg>
+                                        <span>{vehicle.interestedCount || vehicle.watchCount || 0}</span>
+                                     </div>
+                                </div>
+                                <div className="flex flex-col items-center mt-2 text-xs font-normal">
+                                     <span className="uppercase text-gray-300">Bid</span>
+                                     <span className="font-bold text-base">₹{(vehicle.currentBid/1000).toFixed(1)}k</span>
+                                </div>
+                            </div>
+                            {/* Status Badge Mini */}
+                            {vehicle.status === 'Live Auction' && (
+                                <div className="absolute top-2 right-2 w-3 h-3 bg-red-500 rounded-full border border-white animate-pulse"></div>
+                            )}
+                            {vehicle.status === 'Pending Review' && (
+                                <div className="absolute top-2 left-2 bg-yellow-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded shadow-sm">Pending</div>
+                            )}
+                         </div>
